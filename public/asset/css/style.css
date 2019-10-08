@@ -164,15 +164,20 @@ main section h1{
     margin-bottom: 70px;
 }
 
-main section article{
+main section a{
     width: 300px;
     margin-bottom: 70px;
+    display:block;
 }
 
-main section article img{
+main section a article{
     width: 100%;
 }
-main section article h2, main section article p{
+
+main section a article img{
+    width: 100%;
+}
+main section a article h2, main section a article p{
     padding: 20px 3% 0 3%;
 }
 

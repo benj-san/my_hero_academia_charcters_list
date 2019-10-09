@@ -124,7 +124,7 @@ main{
     padding: 50px 3%;
     height: calc(100vh - 166.4px);
     position: relative;
-    background-color: rgba(255, 255, 255, 0.42);
+    background-color: rgba(255, 255, 255, 0.63);
     overflow: hidden;
 }
 
@@ -164,15 +164,93 @@ main section h1{
     margin-bottom: 70px;
 }
 
-main section article{
+main section .characterCard{
     width: 300px;
     margin-bottom: 70px;
+    position: relative;
 }
 
-main section article img{
+main section .characterCard a:not(.deleteMe){
+    width: 100%;
+    display: block;
+}
+
+main section .characterCard .deleteMe{
+    color: red;
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index:1;
+    font-size: 1.5rem;
+    opacity: 0;
+    transition: opacity .5s;
+}
+
+main section .characterCard .updateMe{
+    position: absolute;
+    top: 0;
+    right: 30px;
+    z-index:3;
+    opacity: 0;
+    transition: opacity .5s;
+    cursor: pointer;
+}
+
+main section .characterCard:hover .deleteMe, main section .characterCard:hover .updateMe{
+    opacity: 1;
+}
+
+main section .characterCard a article{
     width: 100%;
 }
-main section article h2, main section article p{
+
+main section .characterCard a article img{
+    width: 100%;
+}
+main section .characterCard a article h2, main section .characterCard a article p{
     padding: 20px 3% 0 3%;
+}
+
+main section .characterCard .updateForm{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 15px;
+    display: none;
+    z-index: 2;
+}
+
+main section .characterCard .updateForm.displayed{
+    display: block;
+}
+
+main section .characterCard .updateForm label{
+    width: 100%;
+}
+
+main section .characterCard .updateForm label input, main section .characterCard .updateForm label textarea{
+    padding: 10px 0;
+    margin-bottom: 25px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.5);
+    width: 100%;
+}
+
+main section .characterCard .updateForm label textarea{
+    resize: none;
+    height: 150px;
+}
+
+main section .characterCard .updateForm > input{
+    margin: 0 auto;
+    padding: 15px 20px;
+    background-color: var(--second-color);
+    cursor: pointer;
+    color: white;
+    text-transform: uppercase;
+    font-weight: 600;
+    width: max-content;
 }
 

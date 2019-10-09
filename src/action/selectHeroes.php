@@ -1,7 +1,5 @@
 <?php
-
-    $query = "SELECT * FROM characters";
-    $result = $database->query($query);
-    $characters = $result->fetchAll();
-
+    $sql = "SELECT * FROM characters";
+    $myQuery = $database->query($sql);
+    $characters = $myQuery->fetchAll();
 

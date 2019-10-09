@@ -3,8 +3,8 @@
 class Database
 {
     private $db_name = 'mysql:dbname=my_hero_academia;';
-    private $db_user = 'benjisan';
-    private $db_pass = 'mollyunix';
+    private $db_user = 'lorenzo';
+    private $db_pass = 'queDuSale';
     private $db_host = 'host=localhost;charset=UTF8';
     private $pdo ;
 

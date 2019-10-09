@@ -164,6 +164,7 @@ main section h1{
     margin-bottom: 70px;
 }
 
+<<<<<<< HEAD
 main section .characterCard{
     width: 300px;
     margin-bottom: 70px;
@@ -208,6 +209,22 @@ main section .characterCard a article img{
     width: 100%;
 }
 main section .characterCard a article h2, main section .characterCard a article p{
+=======
+main section a{
+    width: 300px;
+    margin-bottom: 70px;
+    display:block;
+}
+
+main section a article{
+    width: 100%;
+}
+
+main section a article img{
+    width: 100%;
+}
+main section a article h2, main section a article p{
+>>>>>>> b6239cde0555fb78aa0d197eb81935a1a6b515b1
     padding: 20px 3% 0 3%;
 }
 

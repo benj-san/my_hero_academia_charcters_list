@@ -2,7 +2,6 @@
     require_once ('../src/include/header.php');
     require_once '../src/action/selectHeroes.php';
 ?>
-
     <main>
         <video autoplay muted loop id="backgroundVideo">
             <source src="asset/background_video.mp4" type="video/mp4" />
@@ -45,8 +44,7 @@
             <?php
                 }
             ?>
-
-
+            
         </section>
 
     </main>

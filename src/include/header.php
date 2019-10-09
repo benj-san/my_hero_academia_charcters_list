@@ -3,6 +3,10 @@ require_once ('../src/class/Autoloader.php');
 Autoloader::register();
 $pdo = new Database();
 $database = $pdo->connectMe();
+<<<<<<< HEAD
+=======
+require_once '../src/action/selectHeroes.php';
+>>>>>>> b6239cde0555fb78aa0d197eb81935a1a6b515b1
 ?>
 
 <!doctype html>
@@ -30,7 +34,11 @@ $database = $pdo->connectMe();
     </nav>
 </header>
 
+<<<<<<< HEAD
 <form id="insertHeroForm" action="addHero.php" method="post">
+=======
+<form id="insertHeroForm" action="../src/action/addHero.php" method="post">
+>>>>>>> b6239cde0555fb78aa0d197eb81935a1a6b515b1
     <h2>Here comes a new challenger !</h2>
     <label id="halfLabel" >
         <input type="text" name="name" placeholder="Enter a name *">
@@ -39,4 +47,8 @@ $database = $pdo->connectMe();
         <textarea name="description" placeholder="Enter a description *"></textarea>
     </label>
     <input type="submit" value="Add !">
+<<<<<<< HEAD
 </form>
+=======
+</form>
+>>>>>>> b6239cde0555fb78aa0d197eb81935a1a6b515b1

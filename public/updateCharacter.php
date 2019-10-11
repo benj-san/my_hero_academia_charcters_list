@@ -10,8 +10,6 @@
     $heroName = $_POST['name'];
     $heroDescription = $_POST['description'];
 
-    $sql = "UPDATE characters SET name = :name, description = :description WHERE id = :id";
-    $myQuery = $database->prepare($sql);
-    $myAction = $myQuery->execute([':name' => $heroName, ':description' => $heroDescription, ':id' => $heroId]);
+    $database->prepare('UPDATE characters SET name = :name, description= :description WHERE id = :id')->execute([':name'=>$heroName, ':description'=>$heroDescription, ':id'=>$heroId]);
 
     header('location: index.php');

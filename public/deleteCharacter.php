@@ -8,6 +8,7 @@
     $heroId = $_GET['id'];
 
     $sql = "DELETE FROM characters WHERE id = :id";
-    $myQuery = $database->prepare($sql)->execute([':id' => $heroId]);
+    $supp = $database->prepare($sql);
+    $louisXVI = $supp->execute([':id'=> $heroId]);
 
     header('location: index.php');

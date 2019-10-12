@@ -8,8 +8,7 @@
     $heroName = $_POST['name'];
     $heroDescription = $_POST['description'];
 
-    $sql = "INSERT INTO characters (name, description ) VALUES (:name, :description)";
-    $myQuery = $database->prepare($sql);
-    $myAction = $myQuery->execute([':name' => $heroName, ':description' => $heroDescription]);
+    $addHero = new Character();
+    $addHero->addIt($database, $heroName, $heroDescription);
 
     header('location: index.php');

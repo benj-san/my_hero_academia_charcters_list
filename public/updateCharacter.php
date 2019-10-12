@@ -6,10 +6,10 @@
     $database = $pdo->connectMe();
 
     $heroId= $_GET['id'];
-
     $heroName = $_POST['name'];
     $heroDescription = $_POST['description'];
 
-    $database->prepare('UPDATE characters SET name = :name, description= :description WHERE id = :id')->execute([':name'=>$heroName, ':description'=>$heroDescription, ':id'=>$heroId]);
+    $updateCharacter = new Character();
+    $updateCharacter->updateIt($database, $heroId, $heroName, $heroDescription);
 
     header('location: index.php');

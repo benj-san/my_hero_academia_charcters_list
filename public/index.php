@@ -20,21 +20,21 @@
                         <img src="asset/picture/update.png" alt="Update character">
                     </button>
                     <a onClick="return confirm('Are you sure you want to delete?');" class="deleteMe"
-                       href="deleteCharacter.php?id=<?= $character['id'] ?>">x</a>
-                    <a href="character.php?id=<?= $character['id'] ?>">
+                       href="deleteCharacter.php?id=<?= $character->getId() ?>">x</a>
+                    <a href="character.php?id=<?= $character->getId() ?>">
                         <article>
                             <img src="asset/picture/hero/default.png" alt="default picture">
-                            <h2><?= $character['name'] ?></h2>
-                            <p><?= $character['description'] ?></p>
+                            <h2><?= $character->getName() ?></h2>
+                            <p><?= $character->getDescription() ?></p>
                         </article>
                     </a>
-                    <form class="updateForm" action="updateCharacter.php?id=<?= $character['id'] ?>" method="post">
+                    <form class="updateForm" action="updateCharacter.php?id=<?= $character->getId() ?>" method="post">
                         <label id="fullLabel">
-                            <input type="text" name="name" placeholder="Modify name" value="<?= $character['name'] ?>">
+                            <input type="text" name="name" placeholder="Modify name" value="<?= $character->getName() ?>">
                         </label>
                         <label id="fullLabel">
                             <textarea name="description" placeholder="Modify Description">
-                                <?= $character['description'] ?>
+                                <?= $character->getDescription() ?>
                             </textarea>
                         </label>
                         <input type="submit" value="Update !">

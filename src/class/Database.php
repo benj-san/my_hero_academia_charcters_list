@@ -1,5 +1,6 @@
 <?php
 
+
 class Database
 {
     private $db_name = 'mysql:dbname=my_hero_academia;';
@@ -14,9 +15,9 @@ class Database
             /*echo $this->db_name.' '.$this->db_host.' '.$this->db_user.' '.$this->db_pass;
             die;*/
             try {
-                $pdo = new PDO($this->db_name.$this->db_host, $this->db_user, $this->db_pass);
+                $pdo = new \PDO($this->db_name.$this->db_host, $this->db_user, $this->db_pass);
                 $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            } catch (PDOException $erreurMinceJePeuxPasMeConnecter) {
+            } catch (\PDOException $erreurMinceJePeuxPasMeConnecter) {
                 print "Woops, looks like something went wrong, try to connect later !: " . $erreurMinceJePeuxPasMeConnecter->getMessage() . "<br/>";
                 die();
             }

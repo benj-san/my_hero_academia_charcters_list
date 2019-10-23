@@ -1,54 +1,113 @@
 <?php
-    require_once ('../src/include/header.php');
-    require_once '../src/action/selectHeroes.php';
-?>
-    <main>
-        <video autoplay muted loop id="backgroundVideo">
-            <source src="asset/background_video.mp4" type="video/mp4" />
-            My hero academia : Votre navigateur ne permet pas de charger cette vidéo
-        </video>
+//We first need the autoloader, given by twig inside the vendor directory
+require '../vendor/autoload.php';
 
-        <section id="cardContainer">
-            <h1>Our Heroes :</h1>
+//But still I need all my previous objects
+require_once ('../src/class/Autoloader.php');
+Autoloader::register();
+$pdo = new Database();
+$database = $pdo->connectMe();
 
-            <?php
-                foreach ($characters as $character) {
-            ?>
+try {
+// We define where we wanna put our template directory with our view files
+    $loader = new Twig\Loader\FilesystemLoader(__DIR__ . '/../src/template');
+// We create a new twig environment object, we disable the cache, and allow the debug mode
+    $twig = new Twig\Environment($loader, [
+        'cache' => false,
+        'debug' => true
+    ]);
 
-                <div class="characterCard">
-                    <button class="updateMe" type="button">
-                        <img src="asset/picture/update.png" alt="Update character">
-                    </button>
-                    <a onClick="return confirm('Are you sure you want to delete?');" class="deleteMe"
-                       href="deleteCharacter.php?id=<?= $character->getId() ?>">x</a>
-                    <a href="character.php?id=<?= $character->getId() ?>">
-                        <article>
-                            <img src="asset/picture/hero/default.png" alt="default picture">
-                            <h2><?= $character->getName() ?></h2>
-                            <p><?= $character->getDescription() ?></p>
-                        </article>
-                    </a>
-                    <form class="updateForm" action="updateCharacter.php?id=<?= $character->getId() ?>" method="post">
-                        <label id="fullLabel">
-                            <input type="text" name="name" placeholder="Modify name" value="<?= $character->getName() ?>">
-                        </label>
-                        <label id="fullLabel">
-                            <textarea name="description" placeholder="Modify Description">
-                                <?= $character->getDescription() ?>
-                            </textarea>
-                        </label>
-                        <input type="submit" value="Update !">
-                    </form>
-                </div>
+//We can add some twig functions / filters / Macro or extension i.e. :
+//I want to be able to dump every variables in my twig view
+    $twig->addExtension(new Twig\Extension\DebugExtension());
+    $twig->addExtension(new Twig_Extensions_Extension_Text());
 
-            <?php
-                }
-            ?>
+// We create a switch case for all the pagges we want to display, all of em will be detected by a GET action
+// But when we first come on the website we want to see the home page so...
+    $page = 'home';
+    if (isset($_GET['page'])) {
+        $page = $_GET['page'];
+    }
 
-        </section>
+    //Here we check if someone wants to suppress a hero
+    if (isset($_GET['action']) && $_GET['action'] === 'suppressHero'){
+        $heroId = $_GET['id'];
 
-    </main>
+        $deleteCharacter = new Character();
+        $deleteCharacter->deleteIt($database, $heroId);
 
-<?php
-require_once ('../src/include/footer.html');
-?>
+        header ('location: index.php');
+    }
+
+    //here we test the forms
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+
+        $heroName = trim(htmlspecialchars($_POST['name']));
+        $heroDescription = trim(htmlspecialchars($_POST['description']));
+        //Here we add the condition if we want to add a hero
+        if (isset($_POST['addHero'])) {
+
+            $addHero = new Character();
+            $addHero->addIt($database, $heroName, $heroDescription);
+        }
+
+        //Here we add the condition if we want to update a hero
+        if (isset($_POST['updateHero'])) {
+            $heroId= $_GET['id'];
+
+            $updateCharacter = new Character();
+            $updateCharacter->updateIt($database, $heroId, $heroName, $heroDescription);
+        }
+    }
+
+
+    switch ($page){
+        case 'home' :
+
+            //we import our heroes selection
+            $sql = "SELECT * FROM characters";
+            $myQuery = $database->query($sql);
+            $characters = $myQuery->fetchAll(PDO::FETCH_CLASS, 'Character');
+            $targetPage = '';
+            // Then we can load the correct page according to the target
+            echo $twig->render('home.html.twig',
+                [
+                    'characters' => $characters
+                ]);
+            break;
+
+        case 'character' :
+
+            //We import the hero selection
+            $idHero = $_GET['id'];
+
+            $sql = "SELECT * FROM characters WHERE id = :id";
+            $myQuery = $database->prepare($sql);
+            $myQuery->setFetchMode(PDO::FETCH_CLASS, 'Character');
+            $myAction = $myQuery->execute([':id' => $idHero]);
+            $character = $myQuery->fetch();
+
+            $targetPage = "?page=$page&id=$idHero";
+
+            if(!empty($character)){
+                // Then we can load the correct page according to the target
+                echo $twig->render('character.html.twig',
+                    [
+                        'character' => $character,
+                        'targetPage' => $targetPage
+                    ]);
+            } else{
+                echo $twig->render('notFound.html.twig');
+            }
+            break;
+
+        default :
+            echo $twig->render('notFound.html.twig');
+            break;
+    }
+
+
+} catch (Exception $e) {
+die ('Woops, looks like something went wrong : ' . $e->getMessage());
+}
+

@@ -1,0 +1,15 @@
+{% macro input(name, placeholder) %}
+    <label id="fullLabel" >
+        <input type="text" name="{{ name }}" placeholder="{{ placeholder }}">
+    </label>
+{% endmacro %}
+
+{% macro textarea (name, placeholder)%}
+    <label id="fullLabel" >
+        <textarea name="{{name}}" placeholder="{{placeholder}}"></textarea>
+    </label>
+{% endmacro %}
+
+{% macro submit (value) %}
+    <input type="submit" value="{{ value }}">
+{% endmacro %}

@@ -18,7 +18,7 @@
 
            {% for character in characters %}
 
-            <div class="characterCard">
+            <div class="characterCard" id="hero{{ character.id }}">
                 <button class="updateMe" type="button">
                     <img src="asset/picture/update.png" alt="Update character">
                 </button>
@@ -37,6 +37,7 @@
                 </a>
                 <form class="updateForm" action="index.php?id={{ character.id }}" method="post">
                     <input type="hidden" name="updateHero">
+                    <input type="hidden" name="editId" value ="{{ character.id }}">
                     <label id="fullLabel">
                         <input type="text" name="name" placeholder="Modify name" value="{{ character.name }}">
                     </label>

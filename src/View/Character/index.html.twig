@@ -1,0 +1,100 @@
+{# This line means we gonna 'insert' our homepage inside the skeleton we just created #}
+{% extends 'base.html.twig' %}
+
+{# And just replace the blocks we want to change #}
+{# Everything inside this title block will replace what was inside the base one #}
+{% block title %}MHA Universe : Homepage{% endblock %}
+
+{# The most important block, inside this one we put all the html we want to display inside the 'corpse' of our page #}
+{% block content %}
+    <main>
+        <video autoplay muted loop id="backgroundVideo">
+            <source src="/assets/background_video.mp4" type="video/mp4" />
+            My hero academia : Votre navigateur ne permet pas de charger cette vidéo
+        </video>
+
+        <section>
+
+            <h1>{{categories[0]['title']}}</h1>
+
+
+            <section id="cardContainer">
+
+                {% for character in heroesCharacters %}
+
+                    <div class="characterCard" id="hero{{ character.charcater.id }}">
+                        <button class="updateMe" type="button">
+                            <img src="/assets/picture/update.png" alt="Update character">
+                        </button>
+                        <a onClick="return confirm('Are you sure you want to delete?');" class="deleteMe"
+                           href="delete/{{ character.id }}">x</a>
+                        <a href="show/{{ character.id }}">
+                            <article>
+                                {% if character.picture is empty %}
+                                    <img src="/assets/picture/hero/default.png" alt="{{ character.name }}">
+                                {% else %}
+                                    <img src="/assets/picture/hero/{{ character.picture }}" alt="{{ character.name }}">
+                                {% endif %}
+                                <h2>{{ character.name }}</h2>
+                            </article>
+                        </a>
+                        <form class="updateForm" action="index" method="post">
+                            <input type="hidden" name="updateHero">
+                            <input type="hidden" name="editId" value ="{{ character.id }}">
+                            <label id="fullLabel">
+                                <input type="text" name="name" placeholder="Modify name" value="{{ character.name }}">
+                            </label>
+                            <label id="fullLabel">
+                                <textarea name="description" placeholder="Modify Description">{{ character.description }}</textarea>
+                            </label>
+                            <input type="submit" value="Update !">
+                        </form>
+                    </div>
+
+                {% endfor %}
+
+            </section>
+
+            <h1>{{categories[1]['title']}}</h1>
+
+            <section id="cardContainer2">
+
+                {% for character in vilainsCharacters %}
+
+                    <div class="characterCard" id="hero{{ character.id }}">
+                        <button class="updateMe" type="button">
+                            <img src="/assets/picture/update.png" alt="Update character">
+                        </button>
+                        <a onClick="return confirm('Are you sure you want to delete?');" class="deleteMe"
+                           href="delete/{{ character.id }}">x</a>
+                        <a href="show/{{ character.id }}">
+                            <article>
+                                {% if character.picture is empty %}
+                                    <img src="/assets/picture/hero/default.png" alt="{{ character.name }}">
+                                {% else %}
+                                    <img src="/assets/picture/hero/{{ character.picture }}" alt="{{ character.name }}">
+                                {% endif %}
+                                <h2>{{ character.name }}</h2>
+                            </article>
+                        </a>
+                        <form class="updateForm" action="index" method="post">
+                            <input type="hidden" name="updateHero">
+                            <input type="hidden" name="editId" value ="{{ character.id }}">
+                            <label id="fullLabel">
+                                <input type="text" name="name" placeholder="Modify name" value="{{ character.name }}">
+                            </label>
+                            <label id="fullLabel">
+                                <textarea name="description" placeholder="Modify Description">{{ character.description }}</textarea>
+                            </label>
+                            <input type="submit" value="Update !">
+                        </form>
+                    </div>
+
+                {% endfor %}
+
+            </section>
+
+        </section>
+
+    </main>
+{% endblock %}

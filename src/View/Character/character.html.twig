@@ -1,0 +1,18 @@
+{# This line means we gonna 'insert' our homepage inside the skeleton we just created #}
+{% extends 'base.html.twig' %}
+
+{# And just replace the blocks we want to change #}
+{# Everything inside this title block will replace what was inside the base one #}
+{% block title %}MHA Universe : {{ character.name }}{% endblock %}
+
+{% block content %}
+    <main>
+        {% if character.picture is empty %}
+            <img src="/assets/picture/hero/defaultBackground.png" alt="{{ character.name }}">
+        {% else %}
+            <img src="/assets/picture/hero/{{ character.background }}" alt="{{ character.name }}">
+        {% endif %}
+        <h1>{{ character.name }}</h1>
+        <p>{{ character.description }}</p>
+    </main>
+{% endblock %}

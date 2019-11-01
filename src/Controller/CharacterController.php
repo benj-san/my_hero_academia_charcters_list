@@ -21,45 +21,19 @@ class CharacterController extends AbstractController
     {
 
         $characterManager = new characterManager();
-        $indexPage = $addingPage = 'index';
-
-        if ($_SERVER["REQUEST_METHOD"] == "POST") {
-            $heroName = trim(htmlspecialchars($_POST['name']));
-            $heroDescription = trim(htmlspecialchars($_POST['description']));
-            $heroCategory = ($_POST['category']);
-            //Here we add the condition if we want to add a hero
-            if (isset($_POST['addHero'])) {
-                $character = [
-                    'name' => $heroName,
-                    'description' => $heroDescription,
-                    'category_id' => $heroCategory
-                ];
-                $characterManager->insert($character);
-            }
-
-            //Here we add the condition if we want to update a hero
-            if (isset($_POST['updateHero'])) {
-                $heroId = $_POST['editId'];
-                $character['name'] = $heroName;
-                $character['description'] = $heroDescription;
-                $character['id'] = $heroId;
-                $characterManager->update($character);
-            }
-        }
-
-        $heroesCharacters = $characterManager->selectAllByCategory(1);
-
-        $vilainsCharacters = $characterManager->selectAllByCategory(2);
+        $indexPage = 'index';
+        $addPage = 'add';
 
         $categoryManager = new CategoryManager();
         $categories = $categoryManager->selectAll();
 
+        $characters = $characterManager->selectAllByCategory();
+
         return $this->twig->render('Character/index.html.twig', [
-            'vilainsCharacters' => $vilainsCharacters,
-            'heroesCharacters' => $heroesCharacters,
+            'characters' => $characters,
             'categories' => $categories,
             'indexPage' => $indexPage,
-            'addingPage' => $addingPage
+            'addPage' => $addPage
         ]);
     }
 
@@ -78,31 +52,23 @@ class CharacterController extends AbstractController
         $characterManager = new CharacterManager();
         $character = $characterManager->selectOneById($id);
         $indexPage = '../index';
-        $addingPage = $id;
-
-        if ($_SERVER["REQUEST_METHOD"] == "POST") {
-            $heroName = trim(htmlspecialchars($_POST['name']));
-            $heroDescription = trim(htmlspecialchars($_POST['description']));
-                $characterAdded = [
-                    'name' => $heroName,
-                    'description' => $heroDescription,
-                ];
-                $characterManager->insert($characterAdded);
-        }
+        $addPage = '../add';
 
         if (!empty($character)) {
             return $this->twig->render('Character/character.html.twig', [
                 'character' => $character,
                 'indexPage' => $indexPage,
-                'addingPage' => $addingPage
+                'addPage' => $addPage
             ]);
         } else {
-            return $this->twig->render('Character/notFound.html.twig');
+            return $this->twig->render('Character/notFound.html.twig', [
+                'indexPage' => $indexPage
+            ]);
         }
     }
 
     /**
-     * Handle item deletion
+     * Handle character deletion
      *
      * @param int $id
      */
@@ -110,6 +76,44 @@ class CharacterController extends AbstractController
     {
         $itemManager = new characterManager();
         $itemManager->delete($id);
+        header('Location:/character/index');
+    }
+
+    /**
+     * Handle character deletion
+     *
+     * @param int $id
+     */
+    public function edit(int $id)
+    {
+
+        $heroId = $id;
+        $heroName = trim(htmlspecialchars($_POST['name']));
+        $heroDescription = trim(htmlspecialchars($_POST['description']));
+
+        $character['name'] = $heroName;
+        $character['description'] = $heroDescription;
+        $character['id'] = $heroId;
+
+        $itemManager = new characterManager();
+        $itemManager->update($character);
+
+        header('Location:/character/index');
+    }
+
+    public function add()
+    {
+        $heroName = trim(htmlspecialchars($_POST['name']));
+        $heroDescription = trim(htmlspecialchars($_POST['description']));
+        $heroCategory = ($_POST['category']);
+        $character = [
+            'name' => $heroName,
+            'description' => $heroDescription,
+            'category_id' => $heroCategory
+        ];
+        $characterManager = new CharacterManager();
+
+        $characterManager->insert($character);
         header('Location:/character/index');
     }
 }

@@ -31,8 +31,7 @@
     </nav>
 </header>
 
-<form id="insertHeroForm" action="{{ addingPage }}" method="post">
-    <input type="hidden" name="addHero">
+<form id="insertHeroForm" action="{{ addPage }}" method="post">
     <h2>Here comes a new challenger !</h2>
     {{form.input('name', 'Enter a name *')}}
     <div id="flexRadio">

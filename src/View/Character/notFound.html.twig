@@ -1,11 +1,26 @@
-{% extends 'base.html.twig' %}
+<!DOCTYPE html>
+<html lang="fr FR">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=Lato:100,100i,300,300i,400,400i,700,700i,900,900i&display=swap');
+        @import url('/assets/css/style.css');
+    </style>
+    <title>MHA Universe : Not found</title>
+</head>
+<body>
 
-{% block title %}MHA Universe : Not found{% endblock %}
+<header id="headerPosition">
+    <a href="{{ indexPage }}">
+        <img src="/assets/picture/hero/default.png" alt="My Hero Academia">
+    </a>
+</header>
 
+<main>
+    <h1 id="notFoundTitle">違います - please go back <a href="../index">Home</a></h1>
+    <img src="/assets/picture/404.png" alt="Not found">
+</main>
 
-{% block content %}
-    <main>
-        <h1 id="notFoundTitle">違います - please go back <a href="../index">Home</a></h1>
-        <img src="/assets/picture/404.png" alt="Not found">
-    </main>
-{% endblock %}
+</body>
+</html>

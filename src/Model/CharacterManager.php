@@ -24,18 +24,18 @@ class CharacterManager extends AbstractManager
      *
      * @return array
      */
-    public function selectAllByCategory($category): array
+    public function selectAllByCategory(): array
     {
         $myQuery =  $this->pdo->query("SELECT characters.id,
        $this->table.name,
        $this->table.description,
        $this->table.picture,
        $this->table.background,
+       $this->table.category_id,
        category.title
         FROM $this->table
              JOIN category 
-             ON category.id = $this->table.category_id
-             WHERE $this->table.category_id = $category");
+             ON category.id = $this->table.category_id");
         $categoriesHeroes = $myQuery->fetchAll();
         return $categoriesHeroes;
     }

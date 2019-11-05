@@ -6,7 +6,7 @@ namespace App\Controller;
 use App\Model\CategoryManager;
 use App\Model\CharacterManager;
 
-class ApiController extends AbstractController
+class ApiController
 {
 
     public function character($id)

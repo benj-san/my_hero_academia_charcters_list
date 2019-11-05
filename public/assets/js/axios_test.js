@@ -4,9 +4,8 @@
         console.log(data)
     });
 */
-function updateChar(e) {
-    e.preventDefault();
-    console.log("Hah!!!");
+function updateChar(event) {
+    event.preventDefault();
     fetch("http://localhost:8000/api/character/1",{
         method: 'PUT',
         headers: {

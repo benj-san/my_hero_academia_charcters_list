@@ -25,24 +25,64 @@
         <img src="/assets/picture/hero/default.png" alt="My Hero Academia">
     </a>
     <nav>
-        <button id="popMyForm" type="button">
-            <img src="/assets/picture/plus.png" alt="Add a Hero" >
+        {% if session is empty %}
+        {% else %}
+            <button id="popMyForm" type="button">
+                <img src="/assets/picture/plus.png" alt="Add a Hero" >
+            </button>
+        {% endif %}
+        <button type="button" id="popMyAccount">
+            <img src="/assets/picture/user.png" alt="Your account" >
         </button>
     </nav>
 </header>
 
-<form id="insertHeroForm" action="{{ addPage }}" method="post">
-    <h2>Here comes a new challenger !</h2>
-    {{form.input('name', 'Enter a name *')}}
-    <div id="flexRadio">
-        <input type="radio" id="heroStyle" name="category" value="1" checked >
-        <label for="heroStyle">Hero</label>
-        <input type="radio" id="vilainStyle" name="category" value="2">
-        <label for="vilainStyle">Vilain</label>
+
+
+{% if session is empty %}
+
+    <form class="popinForm" action="{{ userPage }}" id="accountForm" method="post">
+        <h2>Create an account</h2>
+        {{form.input('name', 'Enter your login *')}}
+        <label id="fullLabel" >
+            <input type="password" name="password" placeholder="Enter your password">
+        </label>
+        {{form.submit('Join the team!')}}
+    </form>
+    <form class="popinForm" action="{{ connectPage }}" id="accountAccess" method="post">
+        <h2>Access your account</h2>
+        {{form.input('name', 'Enter your login *')}}
+        <label id="fullLabel" >
+            <input type="password" name="password" placeholder="Enter your password">
+        </label>
+        {{form.submit('Let\'s go !')}}
+    </form>
+
+{% else %}
+
+    <form class="popinForm" id="insertHeroForm" action="{{ addPage }}" method="post" enctype="multipart/form-data">
+        <h2>Here comes a new challenger !</h2>
+        {{form.input('name', 'Enter a name *')}}
+        <label id="fullLabel" >
+            <input type="file" name="card">
+        </label>
+        {#    <input type="file" name="background">#}
+        <div id="flexRadio">
+            <input type="radio" id="heroStyle" name="category" value="1" checked >
+            <label for="heroStyle">Hero</label>
+            <input type="radio" id="vilainStyle" name="category" value="2">
+            <label for="vilainStyle">Vilain</label>
+        </div>
+        {{form.textarea('description', 'Enter a description *')}}
+        {{form.submit('PLUS ULTRA !')}}
+    </form>
+
+    <div class="popinForm" id="kiminonawa">
+        <h2> Hello {{ session.login }}</h2>
+        <a href={{ logoutPage }}> Logout </a>
     </div>
-    {{form.textarea('description', 'Enter a description *')}}
-    {{form.submit('PLUS ULTRA !')}}
-</form>
+
+{% endif %}
 
 {% block content %}
     <h1>Ce titre ne s'affichera pas non plus</h1>

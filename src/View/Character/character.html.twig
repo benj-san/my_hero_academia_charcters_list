@@ -7,12 +7,14 @@
 
 {% block content %}
     <main>
-        {% if character.picture is empty %}
+        {% if character.background is empty %}
             <img src="/assets/picture/hero/defaultBackground.png" alt="{{ character.name }}">
         {% else %}
             <img src="/assets/picture/hero/{{ character.background }}" alt="{{ character.name }}">
         {% endif %}
         <h1>{{ character.name }}</h1>
+        <h2>{{ character.title }}</h2>
+        <span>{{ character.updated_at | date("m-d-Y H:i") }} by {{ character.username }}</span>
         <p>{{ character.description }}</p>
     </main>
 {% endblock %}

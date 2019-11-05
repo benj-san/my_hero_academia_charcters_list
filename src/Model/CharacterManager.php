@@ -32,14 +32,36 @@ class CharacterManager extends AbstractManager
        $this->table.picture,
        $this->table.background,
        $this->table.category_id,
-       category.title
+       category.title,
+       user.name as username
         FROM $this->table
              JOIN category 
-             ON category.id = $this->table.category_id");
+             ON category.id = $this->table.category_id
+             JOIN user ON user.id = $this->table.user_id");
         $categoriesHeroes = $myQuery->fetchAll();
         return $categoriesHeroes;
     }
 
+    public function selectOneByCategory(int $id)
+    {
+        // prepared request
+        $statement = $this->pdo->prepare("SELECT 
+       $this->table.id,
+       $this->table.name,
+       $this->table.description,
+       $this->table.updated_at,
+       $this->table.background,
+       category.title,
+       user.name as username
+       FROM $this->table
+       JOIN category ON category.id = $this->table.category_id
+        JOIN user ON user.id = $this->table.user_id
+        WHERE $this->table.id=:id");
+        $statement->bindValue('id', $id, \PDO::PARAM_INT);
+        $statement->execute();
+
+        return $statement->fetch();
+    }
 
     /**
      * @param array $character
@@ -48,11 +70,13 @@ class CharacterManager extends AbstractManager
     public function insert(array $character): int
     {
         // prepared request
-        $statement = $this->pdo->prepare("INSERT INTO $this->table (name, description, category_id) 
-                                                    VALUES (:name, :description, :category)");
+        $statement = $this->pdo->prepare("INSERT INTO $this->table (name, description, category_id, picture, user_id) 
+                                                    VALUES (:name, :description, :category, :picture, :user)");
         $statement->bindValue('name', $character['name'], \PDO::PARAM_STR);
         $statement->bindValue('description', $character['description'], \PDO::PARAM_STR);
         $statement->bindValue('category', $character['category_id'], \PDO::PARAM_STR);
+        $statement->bindValue('picture', $character['picture'], \PDO::PARAM_STR);
+        $statement->bindValue('user', $character['user_id'], \PDO::PARAM_STR);
 
         if ($statement->execute()) {
             return (int)$this->pdo->lastInsertId();

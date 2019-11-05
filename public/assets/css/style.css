@@ -56,17 +56,25 @@ button, input, textarea{
     letter-spacing: 1px;
     font-family: 'Commando', sans-serif;
 }
+#headerPosition nav{
+    display: flex;
+    justify-content: flex-end;
+}
 #headerPosition nav button{
     display: block;
     width: max-content;
     cursor: pointer;
 }
 
+#headerPosition nav #popMyForm{
+    margin-right: 15px;
+}
+
 #headerPosition nav button img{
     width: 46px;
 }
 
-#insertHeroForm{
+.popinForm{
     position: absolute;
     z-index: 4;
     top: 105.7px;
@@ -77,24 +85,36 @@ button, input, textarea{
     transition: right 1s;
 }
 
-#insertHeroForm.selected{
+#accountForm{
+    z-index: 3;
+}
+
+#accountAccess{
+    z-index: 5;
+}
+
+#kiminonawa{
+    z-index: 5;
+}
+
+#insertHeroForm.selected, #accountForm.selected, #accountAccess.selected, #kiminonawa.selected{
     right: 0;
 }
 
-#insertHeroForm label{
+.popinForm label{
     display: block;
     margin-top: 40px;
 }
 
-#insertHeroForm #halfLabel{
+.popinForm #halfLabel{
     width: 350px;
 }
 
-#insertHeroForm #fullLabel{
+.popinForm #fullLabel{
     width: 100%;
 }
 
-#insertHeroForm #flexRadio{
+.popinForm #flexRadio{
     display: flex;
     flex-flow: row wrap;
     justify-content: flex-start;
@@ -102,24 +122,22 @@ button, input, textarea{
     margin: 10px 0;
 }
 
-#insertHeroForm #flexRadio input, #insertHeroForm #flexRadio label{
+.popinForm #flexRadio input, .popinForm #flexRadio label{
     margin: 0 10px 0 10px;
 }
 
-#insertHeroForm label input, #insertHeroForm label textarea{
+.popinForm label input, .popinForm label textarea{
     width: 100%;
     border-bottom: 1px solid rgba(0, 0, 0, 0.5);
     padding: 10px 0;
 }
 
-#insertHeroForm label textarea{
+.popinForm label textarea{
     resize: none;
-    height: 250px;
+    height: 150px;
 }
 
-
-
-#insertHeroForm > input{
+.popinForm > input{
     margin: 20px auto 0 auto;
     width: max-content;
     padding: 15px 20px;
@@ -150,7 +168,7 @@ h1{
     padding-top: 10px;
     padding-left: 3px;
     width: 100%;
-    margin-bottom: 70px;
+    margin-bottom: 55px;
 }
 
 h2{
@@ -214,7 +232,7 @@ main section section{
 }
 
 main section section .characterCard{
-    width: 250px;
+    width: 240px;
     margin-bottom: 70px;
     position: relative;
 }
@@ -255,7 +273,7 @@ main section section .characterCard a article{
 
 main section section .characterCard a article img{
     width: 100%;
-    height: 250px;
+    height: 240px;
     object-fit: contain;
 }
 
@@ -292,7 +310,7 @@ main section section .characterCard .updateForm label input, main section sectio
 
 main section section .characterCard .updateForm label textarea{
     resize: none;
-    height: 150px;
+    height: 125px;
 }
 
 main section section .characterCard .updateForm > input{
@@ -304,5 +322,11 @@ main section section .characterCard .updateForm > input{
     text-transform: uppercase;
     font-weight: 600;
     width: max-content;
+}
+
+@media screen and (max-width: 510px){
+    main section section {
+        justify-content: center;
+    }
 }
 

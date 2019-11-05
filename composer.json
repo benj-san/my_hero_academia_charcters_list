@@ -13,7 +13,8 @@
         "ext-pdo" : "*",
         "twig/twig": "^2.4",
       "ext-mysql": "*",
-      "ext-json": "*"
+      "ext-json": "*",
+      "ext-mysql_xdevapi": "*"
     },
     "require-dev": {
         "phpmd/phpmd": "^2.7",

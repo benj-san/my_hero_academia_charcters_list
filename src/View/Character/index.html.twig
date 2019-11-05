@@ -27,11 +27,17 @@
                     {% if character.category_id == category.id %}
 
                         <div class="characterCard" id="hero{{ character.id }}">
-                            <button class="updateMe" type="button">
-                                <img src="/assets/picture/update.png" alt="Update character">
-                            </button>
-                            <a onClick="return confirm('Are you sure you want to delete?');" class="deleteMe"
-                               href="delete/{{ character.id }}">x</a>
+
+                            {% if character.username == session.login %}
+
+                                <button class="updateMe" type="button">
+                                    <img src="/assets/picture/update.png" alt="Update character">
+                                </button>
+                                <a onClick="return confirm('Are you sure you want to delete?');" class="deleteMe"
+                                   href="delete/{{ character.id }}">x</a>
+
+                            {% endif %}
+
                             <a href="show/{{ character.id }}">
                                 <article>
                                     {% if character.picture is empty %}
@@ -42,16 +48,22 @@
                                     <h2>{{ character.name }}</h2>
                                 </article>
                             </a>
-                            <form class="updateForm" action="edit/{{ character.id }}" method="post">
-                                <input type="hidden" name="editId" value ="{{ character.id }}">
-                                <label id="fullLabel">
-                                    <input type="text" name="name" placeholder="Modify name" value="{{ character.name }}">
-                                </label>
-                                <label id="fullLabel">
-                                    <textarea name="description" placeholder="Modify Description">{{ character.description }}</textarea>
-                                </label>
-                                <input type="submit" value="Update !">
-                            </form>
+
+                            {% if character.username == session.login %}
+
+                                <form class="updateForm" action="edit/{{ character.id }}" method="post" enctype="multipart/form-data">
+                                    <input type="hidden" name="editId" value ="{{ character.id }}">
+                                    <label id="fullLabel">
+                                        <input type="text" name="name" placeholder="Modify name" value="{{ character.name }}">
+                                    </label>
+                                    <label id="fullLabel">
+                                        <textarea name="description" placeholder="Modify Description">{{ character.description }}</textarea>
+                                    </label>
+                                    <input type="submit" value="Update !">
+                                </form>
+
+                            {% endif %}
+
                         </div>
 
                     {% endif %}
@@ -66,3 +78,8 @@
 
     </main>
 {% endblock %}
+
+{#
+{% block javascript %}
+<script src="/assets/js/axios_test.js"></script>
+{% endblock %}#}

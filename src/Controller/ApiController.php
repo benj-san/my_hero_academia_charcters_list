@@ -3,7 +3,6 @@
 
 namespace App\Controller;
 
-
 use App\Model\CategoryManager;
 use App\Model\CharacterManager;
 
@@ -15,9 +14,7 @@ class ApiController extends AbstractController
         $characterManager = new CharacterManager();
         $character = json_encode($characterManager->selectOneById($id));
 
-        return $this->twig->render('Api/hero.html.twig', [
-            'character' => $character
-        ]);
+        return $character;
     }
 
     public function characters()
@@ -25,9 +22,7 @@ class ApiController extends AbstractController
         $characterManager = new CharacterManager();
         $characters = json_encode($characterManager->selectAll());
 
-        return $this->twig->render('Api/heroes.html.twig', [
-            'characters' => $characters
-        ]);
+        return $characters;
     }
 
     public function heroes()
@@ -35,9 +30,7 @@ class ApiController extends AbstractController
         $characterManager = new CharacterManager();
         $characters = json_encode($characterManager->selectAllByCategory(1));
 
-        return $this->twig->render('Api/heroes.html.twig', [
-            'characters' => $characters
-        ]);
+        return $characters;
     }
 
     public function vilains()
@@ -45,9 +38,7 @@ class ApiController extends AbstractController
         $characterManager = new CharacterManager();
         $characters = json_encode($characterManager->selectAllByCategory(2));
 
-        return $this->twig->render('Api/heroes.html.twig', [
-            'characters' => $characters
-        ]);
+        return $characters;
     }
 
     public function categories()
@@ -55,9 +46,7 @@ class ApiController extends AbstractController
         $categoryManager = new CategoryManager();
         $categories = json_encode($categoryManager->selectAll());
 
-        return $this->twig->render('Api/categories.html.twig', [
-            'categories' => $categories
-        ]);
+        return $categories;
     }
 
     public function category($id)
@@ -65,9 +54,7 @@ class ApiController extends AbstractController
         $categoryManager = new CategoryManager();
         $category = json_encode($categoryManager->selectOneById($id));
 
-        return $this->twig->render('Api/category.html.twig', [
-            'category' => $category
-        ]);
+        return $category;
     }
 
 }
